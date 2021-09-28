@@ -6,30 +6,13 @@ Parameters:
     Type: String
     Default: Test CloudFormation
 
+  OwnerTag:
+    Type: String
+
   VpcCIDR:
     Default: 10.0.0.0/16
     Description: Please enter the IP range (CIDR notation) for this VPC
     Type: String
-
-  # PublicSubnet1CIDR:
-  #   Default: 10.0.10.0/24
-  #   Description: Please enter the IP range (CIDR notation) for the public subnet in the first Availability Zone
-  #   Type: String
-  #
-  # PublicSubnet2CIDR:
-  #   Description: Please enter the IP range (CIDR notation) for the public subnet in the second Availability Zone
-  #   Type: String
-  #   Default: 10.0.11.0/24
-  #
-  # PrivateSubnet1CIDR:
-  #   Default: 10.0.20.0/24
-  #   Description: Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone
-  #   Type: String
-  #
-  # PrivateSubnet2CIDR:
-  #   Default: 10.0.21.0/24
-  #   Description: Please enter the IP range (CIDR notation) for the private subnet in the second Availability Zone
-  #   Type: String
 
   SSHLocation:
     Description: The IP address range that can be used to SSH to the EC2 instances
@@ -52,7 +35,7 @@ Resources:
         - Key: Name
           Value: Test VPC
         - Key: Owner
-          Value: Tipa Odmen
+          Value: !Ref OwnerTag
 
 #====== Internet Gateway =======
   InternetGateway:
@@ -62,7 +45,7 @@ Resources:
         - Key: Name
           Value: !Ref EnvironmentName
         - Key: Owner
-          Value: Tipa Odmen
+          Value: !Ref OwnerTag
 
   InternetGatewayAttachment:              # Attachment IGW to VPC
     Type: AWS::EC2::VPCGatewayAttachment
@@ -82,7 +65,7 @@ Resources:
         - Key: Name
           Value: !Sub ${EnvironmentName} Public Subnet (AZ1)
         - Key: Owner
-          Value: Tipa Odmen
+          Value: !Ref OwnerTag
 
   PublicSubnet2:
     Type: AWS::EC2::Subnet
@@ -95,7 +78,7 @@ Resources:
         - Key: Name
           Value: !Sub ${EnvironmentName} Public Subnet (AZ2)
         - Key: Owner
-          Value: Tipa Odmen
+          Value: !Ref OwnerTag
 
   PrivateSubnet1:
     Type: AWS::EC2::Subnet
@@ -108,7 +91,7 @@ Resources:
         - Key: Name
           Value: !Sub ${EnvironmentName} Private Subnet (AZ1)
         - Key: Owner
-          Value: Tipa Odmen
+          Value: !Ref OwnerTag
 
   PrivateSubnet2:
     Type: AWS::EC2::Subnet
@@ -121,7 +104,7 @@ Resources:
         - Key: Name
           Value: !Sub ${EnvironmentName} Private Subnet (AZ2)
         - Key: Owner
-          Value: Tipa Odmen
+          Value: !Ref OwnerTag
 
 #======= ElasticIP for NAT Gateways ======
   NatGateway1EIP:
@@ -154,7 +137,7 @@ Resources:
         - Key: Name
           Value: !Sub ${EnvironmentName} Public Routes
         - Key: Owner
-          Value: Tipa Odmen
+          Value: !Ref OwnerTag
 
   DefaultPublicRoute:
     Type: AWS::EC2::Route
@@ -185,7 +168,7 @@ Resources:
         - Key: Name
           Value: !Sub ${EnvironmentName} Private Routes (AZ1)
         - Key: Owner
-          Value: Tipa Odmen
+          Value: !Ref OwnerTag
 
   PrivateRouteTable2:
     Type: AWS::EC2::RouteTable
@@ -195,7 +178,7 @@ Resources:
         - Key: Name
           Value: !Sub ${EnvironmentName} Private Routes (AZ2)
         - Key: Owner
-          Value: Tipa Odmen
+          Value: !Ref OwnerTag
 
   DefaultPrivateRoute1:
     Type: AWS::EC2::Route
@@ -239,7 +222,7 @@ Resources:
         - Key: Name
           Value: SSH Security group
         - Key: Owner
-          Value: Tipa Odmen
+          Value: !Ref OwnerTag
 
 Outputs:
   VPC:
